@@ -1,0 +1,19 @@
+---
+layout: layouts/base.njk
+pagination:
+  data: stories
+  size: 1
+  alias: story
+permalink: "stories/{{ story.slug }}/"
+breadcrumb:
+  title: 30 историй Яндекса
+  url: /
+eleventyComputed:
+  title: "{{ story.title }}"
+---
+<article class="longread">
+  <figure>
+    <img src="{{ story.image }}" alt="">
+  </figure>
+  <p>История готовится.</p>
+</article>

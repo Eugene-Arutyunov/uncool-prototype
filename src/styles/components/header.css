@@ -1,0 +1,91 @@
+.header {
+  position: fixed;
+  z-index: 5;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: var(--header-height);
+  margin: 0;
+  padding: 20px var(--layout-padding-horizontal) 8px;
+  pointer-events: none;
+}
+
+.header__content {
+  display: flex;
+  align-items: center;
+  max-width: var(--layout-max-width);
+  margin: 0 auto;
+}
+
+.header__menu {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.header__services {
+  display: flex;
+  pointer-events: auto;
+}
+
+.header__controls {
+  display: flex;
+  margin: 0 0 0 48px;
+  pointer-events: auto;
+}
+
+.header__search {
+  margin: 0 4px 0 0;
+}
+
+.header__button-nav,
+.header__button-search {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  cursor: pointer;
+  border: none;
+  border-radius: var(--header-item-border-radius);
+  background-color: var(--color-bg-control);
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  -webkit-backdrop-filter: var(--header-item-backdrop-filter);
+  backdrop-filter: var(--header-item-backdrop-filter);
+}
+
+.header_theme_black .header__button-search {
+  background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M6.129 12.258a6.129 6.129 0 114.972-2.544l3.812 3.812a.98.98 0 01-1.387 1.387L9.714 11.1a6.1 6.1 0 01-3.585 1.157zm0-1.961a4.168 4.168 0 100-8.336 4.168 4.168 0 000 8.336z' fill='%23050505'/%3E%3C/svg%3E");
+}
+
+.header_theme_black .header__button-nav {
+  background-image: url("data:image/svg+xml,%3Csvg width='12' height='12' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 0H0v4h4V0zM4 8H0v4h4V8zM8 0h4v4H8V0zM12 8H8v4h4V8z' fill='%23050505'/%3E%3C/svg%3E");
+}
+
+@media (hover: hover) {
+  .header__button-nav:hover,
+  .header__button-search:hover {
+    opacity: var(--opacity-hover);
+  }
+}
+
+@media screen and (min-width: 1023px) and (max-width: 1278.9px) {
+  .header__controls {
+    margin: 0 0 0 40px;
+  }
+}
+
+@media screen and (max-width: 1022.9px) {
+  .header__controls {
+    margin: 0;
+  }
+
+  .header__services {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .header {
+    padding-top: 16px;
+  }
+}

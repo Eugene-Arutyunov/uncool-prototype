@@ -1,0 +1,152 @@
+{
+ "naydyotsya-vsyo": {
+  "kind": "logo",
+  "file": "naydyotsya-vsyo.png",
+  "source": "File:Yandex logo ru.svg"
+ },
+ "yet-another-indexer": {
+  "kind": "photo",
+  "file": "yet-another-indexer.jpg",
+  "source": "File:Segalovich Ilya at MIPT 2010 DSC5517 (cropped).jpg"
+ },
+ "koldunshchiki": {
+  "kind": "ui",
+  "file": "koldunshchiki.jpg",
+  "source": "File:Ekrankopio Yandex Nur-Sultan.jpg"
+ },
+ "probki": {
+  "kind": "logo",
+  "file": "probki.png",
+  "source": "File:YandexNavigatorLogo.svg"
+ },
+ "goroda-algoritmy": {
+  "kind": "logo",
+  "file": "goroda-algoritmy.png",
+  "source": "https://yastatic.net/s3/home-static/_/nova3/DGq8Zi-m.png"
+ },
+ "alisa": {
+  "kind": "logo",
+  "file": "alisa.png",
+  "source": "File:Alisa Yandex.svg"
+ },
+ "stantsiya": {
+  "kind": "photo",
+  "file": "stantsiya.jpg",
+  "source": "File:Yandex.Station 01.jpg"
+ },
+ "bespilotniki": {
+  "kind": "photo",
+  "file": "bespilotniki.jpg",
+  "source": "File:Moscow, Yandex self-driving Hyundai Sonata, Robotaxi livery, Mar 2026 01.jpg"
+ },
+ "rovery": {
+  "kind": "photo",
+  "file": "rovery.jpg",
+  "source": "File:Yandex Rover delivery robot in Russia December 2024.jpg"
+ },
+ "taksi": {
+  "kind": "photo",
+  "file": "taksi.jpg",
+  "source": "File:Yandex taxi and Yandex self-driving car during January 2021.jpg"
+ },
+ "kinopoisk": {
+  "kind": "logo",
+  "file": "kinopoisk.png",
+  "source": "File:Kinopoisk orange color logo (2021-present).svg"
+ },
+ "moya-volna": {
+  "kind": "logo",
+  "file": "moya-volna.png",
+  "source": "File:Yandex Music icon 2023.svg"
+ },
+ "meteum": {
+  "kind": "logo",
+  "file": "meteum.png",
+  "source": "https://yandex.ru/weather/favicon-180.png"
+ },
+ "market": {
+  "kind": "logo",
+  "file": "market.png",
+  "source": "File:Yandex Market cropp logo.svg"
+ },
+ "lavka": {
+  "kind": "photo",
+  "file": "lavka.jpg",
+  "source": "File:Moscow, Yandex.Lavka electric bicycle Aug 2025 01.jpg"
+ },
+ "direkt": {
+  "kind": "logo",
+  "file": "direkt.png",
+  "source": "File:Yandex Direct icon.svg"
+ },
+ "krasnaya-roza": {
+  "kind": "photo",
+  "file": "krasnaya-roza.jpg",
+  "source": "File:Yandex main office.jpg"
+ },
+ "shad": {
+  "kind": "ui",
+  "file": "shad.png",
+  "source": "https://avatars.mds.yandex.net/get-lpc/9736426/30258467-181e-4efa-a259-3f53600b9128/orig"
+ },
+ "ipo": {
+  "kind": "photo",
+  "file": "ipo.jpg",
+  "source": "File:Nasdaq MarketSite (51494550508).jpg"
+ },
+ "brauzer": {
+  "kind": "logo",
+  "file": "brauzer.png",
+  "source": "File:Yandex Browser logo.svg"
+ },
+ "panoramy": {
+  "kind": "photo",
+  "file": "panoramy.jpg",
+  "source": "File:Yandex Panorama shooting car in Yerevan, Republic Square, fall 2016.jpg"
+ },
+ "narodnaya-karta": {
+  "kind": "logo",
+  "file": "narodnaya-karta.png",
+  "source": "File:Yandex Maps icon.svg"
+ },
+ "perevodchik": {
+  "kind": "logo",
+  "file": "perevodchik.png",
+  "source": "File:Yandex Translate icon.svg"
+ },
+ "dzen": {
+  "kind": "logo",
+  "file": "dzen.png",
+  "source": "File:Zen logo icon 2024.svg"
+ },
+ "superkompyutery": {
+  "kind": "photo",
+  "file": "superkompyutery.jpg",
+  "source": "File:NOIRLab HQ Server Racks (6V6A0395-CC).jpg"
+ },
+ "shedevrum": {
+  "kind": "ui",
+  "file": "shedevrum.jpg",
+  "source": "File:Shedevrum screenshot 2026-07-30 crop.jpg"
+ },
+ "plus": {
+  "kind": "logo",
+  "file": "plus.png",
+  "source": "https://plus.yandex.ru/apple-touch-icon.png"
+ },
+ "catboost": {
+  "kind": "logo",
+  "file": "catboost.png",
+  "source": "File:CatBoostLogo.png"
+ },
+ "clickhouse": {
+  "kind": "logo",
+  "file": "clickhouse.png",
+  "source": "File:ClickHouse Logomark.svg"
+ },
+ "pochta": {
+  "kind": "logo",
+  "file": "pochta.png",
+  "source": "File:Yandex Mail icon.svg"
+ }
+}

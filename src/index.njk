@@ -1,0 +1,20 @@
+---
+layout: layouts/base.njk
+title: 30 историй Яндекса
+titleSize: xl
+---
+<div class="page__section-inner">
+  <nav class="stories">
+    {%- for story in stories %}
+    <a class="stories__item rounded{% if story.wide.desktop %} stories__item_wide_desktop{% endif %}{% if story.wide.mobile %} stories__item_wide_mobile{% endif %}" href="{{ story.url }}">
+      <h2 class="stories__title">{{ story.title }}</h2>
+      <img class="stories__image stories__image_kind_{{ story.kind }}" src="{{ story.image }}" alt="" loading="lazy">
+    </a>
+    {%- endfor %}
+  </nav>
+
+  <div class="about">
+    <p>Яндекс начинался с поисковика, который понимал русский язык, а вырос в десятки сервисов, которыми пользуются каждый день. За это время накопилось много историй: про то, как появлялись продукты, откуда брались названия и почему некоторые решения сначала казались странными.</p>
+    <p>Здесь мы собрали 30 таких историй. Каждую можно читать отдельно и в любом порядке. Вместе они рассказывают, как компания думала, ошибалась и придумывала новое.</p>
+  </div>
+</div>

@@ -1,0 +1,6 @@
+{%- set crumb = breadcrumb or { title: "О компании", url: "https://yandex.ru/company/about" } -%}
+<div class="page__breadcrumb">
+  <div class="breadcrumb">
+    <a href="{{ crumb.url }}" class="breadcrumb__link"><span class="breadcrumb__icon"><span class="icon-inline icon-inline_size_s" aria-hidden="true"><svg width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" clip-rule="evenodd" fill-rule="evenodd" d="M10.5 2.5a.707.707 0 0 1 0 1L6 8l4.5 4.5a.707.707 0 0 1-1 1L4.707 8.707a1 1 0 0 1 0-1.414L9.5 2.5a.707.707 0 0 1 1 0"/></svg></span></span>{{ crumb.title }}</a>
+  </div>
+</div>

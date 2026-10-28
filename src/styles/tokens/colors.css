@@ -1,0 +1,18 @@
+/* Цвета yandex.ru/company */
+:root {
+  --color-text: #050505;
+  --color-text-secondary: rgba(5, 5, 5, .7);
+  --color-text-tertiary: rgba(5, 5, 5, .5);
+  --color-text-disabled: rgba(5, 5, 5, .2);
+  --color-text-inverse: #fff;
+  --color-text-inverse-secondary: hsla(0, 0%, 100%, .5);
+
+  --color-bg: #fff;
+  --color-bg-mauve: #eef1f7;
+  --color-surface: var(--color-bg-mauve);
+  --color-bg-dark: #050505;
+  --color-bg-dark-addon: #171717;
+  --color-bg-control: rgba(213, 221, 236, .4);
+
+  --color-line: #d7deed;
+}

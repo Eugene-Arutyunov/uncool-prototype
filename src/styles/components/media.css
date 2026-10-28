@@ -1,0 +1,44 @@
+.media {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.media_location_footer .media__item:not(:last-child) {
+  margin-right: 12px;
+}
+
+.media-link {
+  display: block;
+  border-radius: 8px;
+  background-repeat: no-repeat;
+  background-position: 50%;
+}
+
+.media-link_location_footer {
+  width: 32px;
+  height: 24px;
+  padding: 4px 8px;
+  background-color: hsla(0, 0%, 100%, .5);
+  background-size: 16px;
+}
+
+@media (hover: hover) {
+  .media-link_location_footer:hover {
+    background-color: var(--color-text-inverse);
+  }
+}
+
+.media-link_location_footer.media-link_type_telegram {
+  background-image: url(https://yastatic.net/s3/company-ir/s3/company-static/static/_/d419deafb0389ef66c14f90c58d3e81a.svg);
+}
+
+.media-link_location_footer.media-link_type_vkontakte {
+  background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8.62522 12.7358C3.84196 12.7358 1.11369 9.45659 1 4H3.39601C3.47471 8.00499 5.24107 9.70142 6.64018 10.0512V4H8.89635V7.45406C10.278 7.30541 11.7294 5.73142 12.2191 4H14.4752C14.0992 6.13367 12.5252 7.70767 11.4059 8.35475C12.5252 8.87943 14.3179 10.2523 15 12.7358H12.5165C11.9831 11.0743 10.654 9.78887 8.89635 9.61397V12.7358H8.62522Z' fill='%23050505'/%3E%3C/svg%3E");
+}
+
+.media-link_location_footer.media-link_type_youtube {
+  background-image: url("data:image/svg+xml,%3Csvg width='16' height='12' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M14.3765 0.717733C15.0659 0.901263 15.4682 1.48479 15.6518 2.1742C15.9859 3.42362 16 6.00009 16 6.00009C16 6.00009 15.9859 8.57656 15.6518 9.82597C15.4682 10.5154 15.0659 11.0989 14.3765 11.2824C13.1271 11.6166 8 11.6471 8 11.6471C8 11.6471 2.87294 11.6166 1.62353 11.2824C0.934118 11.0989 0.531765 10.5154 0.348235 9.82597C0.0141177 8.57656 0 6.00009 0 6.00009C0 6.00009 0.0141177 3.42362 0.348235 2.1742C0.534118 1.48479 0.934118 0.901263 1.62353 0.717733C2.87294 0.383616 8 0.353027 8 0.353027C8 0.353027 13.1271 0.383616 14.3765 0.717733ZM6.35294 3.64715L10.5882 6.00009L6.35294 8.35303V3.64715Z' fill='%23050505'/%3E%3C/svg%3E");
+}

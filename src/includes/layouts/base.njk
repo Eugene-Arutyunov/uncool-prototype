@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ title }} — Яндекс</title>
+  <link rel="stylesheet" href="/bundle.css">
+</head>
+<body class="body">
+  <div class="app">
+    {% include "partials/header.njk" %}
+    <div class="app__content app__content_margin">
+      <main class="page">
+        <section class="page__section page__section_theme_white page__section_offset-top page__section_offset-bottom page__section_round-bottom">
+          <div class="page__section-inner">
+            {% include "partials/breadcrumb.njk" %}
+            <h1 class="page__title page__title_hero{% if titleSize %} page__title_{{ titleSize }}{% endif %}">{{ title }}</h1>
+          </div>
+          <div class="page__section-content">
+            {{ content | safe }}
+          </div>
+        </section>
+      </main>
+    </div>
+    {% include "partials/footer.njk" %}
+  </div>
+</body>
+</html>
