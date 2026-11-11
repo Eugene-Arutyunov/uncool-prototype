@@ -1,0 +1,44 @@
+/* Сегментед-контрол (пилюля с вариантами) */
+.segmented {
+  display: inline-flex;
+  padding: 3px;
+  border-radius: 999px;
+  background: var(--color-bg-control);
+  font-family: var(--font-text);
+  font-size: 15px;
+  line-height: 20px;
+}
+
+.segmented__option {
+  position: relative;
+  cursor: pointer;
+}
+
+.segmented__option span {
+  display: block;
+  padding: 4px 14px;
+  border-radius: 999px;
+  color: var(--color-text-secondary);
+}
+
+.segmented__input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.segmented__input:checked + span {
+  color: var(--color-text);
+  background: var(--color-bg);
+  box-shadow: 0 1px 4px rgba(5, 5, 5, .12);
+}
+
+.segmented__input:focus-visible + span {
+  outline: 2px solid var(--color-text);
+}
+
+@media (hover: hover) {
+  .segmented__option:hover span {
+    color: var(--color-text);
+  }
+}

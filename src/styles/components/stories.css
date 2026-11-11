@@ -1,5 +1,8 @@
 /*
-  Сетка промоблоков историй: 5 колонок на десктопе, 3 на мобильном.
+  Сетка историй: 5 колонок на десктопе, 3 на мобильном.
+  Первая ячейка — заголовок страницы (.stories__heading).
+  Карточка — картинка и подпись под ней; картинка в своих пропорциях (или ratio из данных).
+  Строки выравниваются по верху, высоты карточек разные.
   Двойная ширина задаётся отдельно для каждой сетки:
   .stories__item_wide_desktop, .stories__item_wide_mobile
 */
@@ -7,16 +10,25 @@
 .stories {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: .3rem;
+  align-items: start;
+  gap: 2.4rem 1rem;
+}
+
+/* заголовок страницы в первой ячейке — леттеринг SVG по ширине колонки */
+.stories__heading {
+  margin: 0;
+}
+
+.stories__heading-image {
+  width: 100%;
+  height: auto;
 }
 
 .stories__item {
-  position: relative;
-  display: block;
-  height: 10rem;
-  padding: 1rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: .7rem;
   color: var(--color-text);
-  background: var(--color-surface);
 }
 
 .stories__item_wide_desktop {
@@ -24,65 +36,102 @@
 }
 
 .stories__title {
-  position: relative;
-  z-index: 1;
-  max-width: 11em;
+  max-width: 13em;
   margin: 0;
   font-family: var(--font-display);
   font-weight: 500;
   font-size: 1rem;
   line-height: 1.15;
+  transition: color .4s;
+}
+
+/* картинка */
+.stories__media {
+  --rounded-radius: 1.5rem;
 }
 
 .stories__image {
-  position: absolute;
-  right: .8rem;
-  bottom: .8rem;
-  transition: transform .4s cubic-bezier(.2, 1, .2, 1);
-}
-
-.stories__image_kind_logo {
-  width: 4rem;
-  height: 4rem;
-  object-fit: contain;
-}
-
-.stories__image_kind_wordmark {
-  width: 60%;
-  height: 1.8rem;
-  object-fit: contain;
-  object-position: right bottom;
-}
-
-.stories__image_kind_photo,
-.stories__image_kind_ui {
-  width: 6.5rem;
-  height: 4.6rem;
-  border-radius: .8rem;
+  width: 100%;
+  height: auto;
   object-fit: cover;
+  transition: filter .4s;
 }
 
-.stories__image_kind_ui {
-  object-position: top;
+.stories__media_empty {
+  aspect-ratio: 6 / 5;
+  background: #dcdcdc;
 }
 
 @media (hover: hover) {
-  .stories__item:hover .stories__image {
-    transform: scale(1.12) rotate(-4deg);
+  /* по ховеру (картинка, цитата, подпись) — мгновенно, при уходе курсора — с транзишеном */
+  .stories__item:hover .stories__image,
+  .stories__item:hover .stories__quote {
+    filter: brightness(105%);
+    transition: none;
   }
+
+  .stories__item:hover .stories__title {
+    color: var(--color-hover);
+    transition: none;
+  }
+}
+
+/* цитата */
+.stories__quote {
+  --rounded-radius: 1.5rem;
+
+  margin: 0;
+  padding: 1.1rem 1.1rem 1rem;
+  background: var(--color-surface-quote, #f2f2f2);
+  transition: filter .4s;
+}
+
+.stories__quote-text {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 2rem;
+  line-height: 1.1;
+  letter-spacing: -.01em;
+}
+
+.stories__portraits {
+  display: flex;
+  margin-top: .9rem;
+}
+
+.stories__portrait {
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.stories__portrait + .stories__portrait {
+  margin-left: -.5rem;
+}
+
+.stories__title {
 }
 
 @media screen and (max-width: 767px) {
   .stories {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.6rem .5rem;
   }
 
   .stories__item {
-    padding: .7rem .75rem;
+    gap: .5rem;
   }
 
   .stories__item_wide_desktop {
     grid-column: auto;
+  }
+
+  .stories__heading,
+  .stories__item_wide_mobile,
+  .stories__item_type_quote {
+    grid-column: 1 / -1;
   }
 
   .stories__item_wide_mobile {
@@ -93,25 +142,26 @@
     font-size: .82rem;
   }
 
-  .stories__image {
-    right: .55rem;
-    bottom: .55rem;
+  .stories__media {
+    --rounded-radius: 1rem;
   }
 
-  .stories__image_kind_logo {
-    width: 3rem;
-    height: 3rem;
+  .stories__heading-image {
+    width: 50%;
   }
 
-  .stories__image_kind_wordmark {
-    width: 70%;
-    height: 1.3rem;
+  .stories__quote {
+    --rounded-radius: 1rem;
+
+    padding: .8rem;
   }
 
-  .stories__image_kind_photo,
-  .stories__image_kind_ui {
-    width: 4.6rem;
-    height: 3.4rem;
-    border-radius: .6rem;
+  .stories__quote-text {
+    font-size: 1.3rem;
+  }
+
+  .stories__portrait {
+    width: 2rem;
+    height: 2rem;
   }
 }

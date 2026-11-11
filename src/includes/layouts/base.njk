@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ title }} — Яндекс</title>
   <link rel="stylesheet" href="/bundle.css">
+  {%- if viewSwitch %}
+  <script>try { var v = localStorage.getItem("view"); if (v) document.documentElement.dataset.view = v; } catch (e) {}</script>
+  {%- endif %}
+  {%- for script in scripts %}
+  <script type="module" src="{{ script }}"></script>
+  {%- endfor %}
 </head>
 <body class="body">
   <div class="app">
@@ -13,8 +19,17 @@
       <main class="page">
         <section class="page__section page__section_theme_white page__section_offset-top page__section_offset-bottom page__section_round-bottom">
           <div class="page__section-inner">
+            {%- if viewSwitch %}
+            <div class="page__breadcrumb-row">
+              {% include "partials/breadcrumb.njk" %}
+              {% include "partials/view-switch.njk" %}
+            </div>
+            {%- else %}
             {% include "partials/breadcrumb.njk" %}
+            {%- endif %}
+            {%- if not hideTitle %}
             <h1 class="page__title page__title_hero{% if titleSize %} page__title_{{ titleSize }}{% endif %}">{{ title }}</h1>
+            {%- endif %}
           </div>
           <div class="page__section-content">
             {{ content | safe }}

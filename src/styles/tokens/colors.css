@@ -15,4 +15,7 @@
   --color-bg-control: rgba(213, 221, 236, .4);
 
   --color-line: #d7deed;
+
+  /* наше: цвет ховера ссылок — яндексовский красный */
+  --color-hover: #fc3f1d;
 }

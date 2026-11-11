@@ -56,6 +56,13 @@
   padding: 0 var(--layout-padding-horizontal);
 }
 
+/* breadcrumb и переключатель вида в одну строку */
+.page__breadcrumb-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.2rem;
+}
+
 .page__breadcrumb {
   padding: 0 0 var(--section-breadcrumb-padding);
 }

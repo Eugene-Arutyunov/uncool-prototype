@@ -12,8 +12,10 @@ eleventyComputed:
   title: "{{ story.title }}"
 ---
 <article class="longread">
+  {%- if story.image %}
   <figure>
     <img src="{{ story.image }}" alt="">
   </figure>
+  {%- endif %}
   <p>История готовится.</p>
 </article>

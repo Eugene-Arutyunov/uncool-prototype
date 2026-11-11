@@ -1,17 +1,56 @@
 ---
 layout: layouts/base.njk
 title: 30 историй Яндекса
-titleSize: xl
+hideTitle: true
+viewSwitch: true
+scripts:
+  - /assets/scripts/pack.js
 ---
 <div class="page__section-inner">
   <nav class="stories">
-    {%- for story in stories %}
-    <a class="stories__item rounded{% if story.wide.desktop %} stories__item_wide_desktop{% endif %}{% if story.wide.mobile %} stories__item_wide_mobile{% endif %}" href="{{ story.url }}">
-      <h2 class="stories__title">{{ story.title }}</h2>
-      <img class="stories__image stories__image_kind_{{ story.kind }}" src="{{ story.image }}" alt="" loading="lazy">
+    {%- for item in grid %}
+    {%- if item.type == "heading" %}
+    <h1 class="stories__heading"><img class="stories__heading-image" src="/assets/images/30-istoriy.svg" alt="30 историй Яндекса"></h1>
+    {#- столбик названий: виден только в режиме «пачка»; data-index = номер карточки в сетке (заголовок всегда первый) -#}
+    <ul class="stories__list rounded" style="--list-rows: {{ ((grid.length - 1) / 2) | round(0, 'floor') + 1 }}">
+      {%- for entry in grid %}{% if entry.type != "heading" %}
+      <li><a class="stories__list-link" href="{{ entry.url }}" data-index="{{ loop.index0 - 1 }}">{{ "Цитата" if entry.type == "quote" else (entry.short or entry.title) }}</a></li>
+      {%- endif %}{% endfor %}
+    </ul>
+    {%- else %}
+    <a class="stories__item stories__item_type_{{ item.type }}{% if item.wide.desktop %} stories__item_wide_desktop{% endif %}{% if item.wide.mobile %} stories__item_wide_mobile{% endif %}" href="{{ item.url }}">
+      {%- if item.type == "quote" %}
+      <blockquote class="stories__quote rounded">
+        <p class="stories__quote-text">{{ item.text }}</p>
+        <div class="stories__portraits">
+          {%- for portrait in item.portraits %}
+          <img class="stories__portrait" src="{{ portrait }}" alt="" loading="lazy">
+          {%- endfor %}
+        </div>
+      </blockquote>
+      {%- elif item.image %}
+      <div class="stories__media rounded">
+        <img class="stories__image" src="{{ item.image }}" alt="" loading="lazy"{% if item.ratio or item.position %} style="{% if item.ratio %}aspect-ratio: {{ item.ratio }};{% endif %}{% if item.position %} object-position: {{ item.position }};{% endif %}"{% endif %}>
+      </div>
+      {%- else %}
+      <div class="stories__media stories__media_empty rounded"></div>
+      {%- endif %}
+      <h2 class="stories__title">{{ item.title }}</h2>
     </a>
+    {%- endif %}
     {%- endfor %}
   </nav>
+
+  {#- Вид «пачка»: объёмная лента. Карточки — клоны карточек сетки, их делает и двигает pack.js -#}
+  <div class="pack" aria-hidden="true">
+    <div class="pack__stage"></div>
+    <div class="pack-settings">
+      <button class="pack-settings__toggle" type="button">Настройки</button>
+      <form class="pack-controls" onsubmit="return false">
+        <button class="pack-controls__close" type="button" aria-label="Закрыть">×</button>
+      </form>
+    </div>
+  </div>
 
   <div class="about">
     <p>Яндекс начинался с поисковика, который понимал русский язык, а вырос в десятки сервисов, которыми пользуются каждый день. За это время накопилось много историй: про то, как появлялись продукты, откуда брались названия и почему некоторые решения сначала казались странными.</p>
