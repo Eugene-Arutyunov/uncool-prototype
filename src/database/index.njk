@@ -1,0 +1,123 @@
+---
+permalink: database/
+eleventyExcludeFromCollections: true
+title: Истории — рабочая база
+---
+{#- Рабочая страница для заказчика: зеркало баз «Истории» и «Запрос данных» из Notion.
+    Не в навигации и закрыта от индексации. Данные: database.11tydata.js. -#}
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>{{ title }}</title>
+  <link rel="stylesheet" href="/bundle.css">
+  <style>{% include "./database.css" %}</style>
+</head>
+<body class="db">
+  <main class="db__page">
+    <header class="db__header">
+      <h1 class="db__title">Истории: рабочая база</h1>
+      <p class="db__meta">Обновлено {{ db.syncedAt }}. Страница обновляется раз в сутки.</p>
+    </header>
+
+    {#- переключатель вкладок; без JS обе части просто идут одна за другой -#}
+    <div class="db-tabs" role="tablist" aria-label="Раздел" hidden>
+      <button class="db-tabs__item" type="button" role="tab" id="tab-stories" aria-controls="stories" aria-selected="true" data-tab="stories">Истории <span class="db-tabs__count">{{ db.total }}</span></button>
+      <button class="db-tabs__item" type="button" role="tab" id="tab-requests" aria-controls="requests" aria-selected="false" data-tab="requests">Запрос данных <span class="db-tabs__count">{{ db.openRequests }}</span></button>
+    </div>
+
+    <section class="db__section" id="stories" data-panel aria-labelledby="tab-stories">
+      <h2 class="db__heading">Истории <span class="db__count">{{ db.total }}</span></h2>
+      <div class="db-filter" role="group" aria-label="Юнит">
+        <button class="db-filter__item" type="button" data-unit="" aria-pressed="true">Все юниты</button>
+        {%- for unit in db.units %}
+        <button class="db-filter__item" type="button" data-unit="{{ unit }}" aria-pressed="false">{{ unit }}</button>
+        {%- endfor %}
+      </div>
+
+      {%- for group in db.groups %}
+      <div class="db-group" data-group>
+        <h3 class="db-group__title"><span class="db-tag db-tag_color_{{ group.color }}">{{ group.name }}</span> <span class="db__count" data-group-count>{{ group.stories.length }}</span></h3>
+        {%- for s in group.stories %}
+        <details class="db-story" id="s-{{ s.id }}" data-story data-unit="{{ s.unit }}">
+          <summary class="db-story__summary">
+            <span class="db-story__title">{{ s.title }}</span>
+            <span class="db-story__side">
+              {%- if s.openRequests %}<span class="db-tag db-tag_color_red">запросов: {{ s.openRequests }}</span>{% endif %}
+              {%- if s.unit %}<span class="db-story__unit">{{ s.unit }}</span>{% endif %}
+            </span>
+          </summary>
+          <div class="db-story__body">
+            {%- if s.aboutHtml %}
+            <div class="db-field"><h4 class="db-field__name">О чём история</h4><div class="db-field__value">{{ s.aboutHtml | safe }}</div></div>
+            {%- endif %}
+            {%- if s.heroes.length %}
+            <div class="db-field"><h4 class="db-field__name">Герои</h4><div class="db-field__value">
+              {%- if s.heroes.length > 1 %}<ul>{% for h in s.heroes %}<li>{{ h }}</li>{% endfor %}</ul>{% else %}<p>{{ s.heroes[0] }}</p>{% endif -%}
+            </div></div>
+            {%- endif %}
+            {%- if s.requests.length %}
+            <div class="db-field"><h4 class="db-field__name">Запрос данных</h4><div class="db-field__value"><ul class="db-field__requests">
+              {%- for r in s.requests %}<li>{{ r.title }} <span class="db-tag db-tag_color_{{ r.statusColor }}">{{ r.status }}</span></li>{% endfor -%}
+            </ul></div></div>
+            {%- endif %}
+            {%- if s.noteHtml %}
+            <div class="db-field"><h4 class="db-field__name">Заметка исследователя</h4><div class="db-field__value">{{ s.noteHtml | safe }}</div></div>
+            {%- endif %}
+            {%- if s.linksHtml.length %}
+            <div class="db-field"><h4 class="db-field__name">Ссылки</h4><div class="db-field__value"><ul class="db-field__links">
+              {%- for l in s.linksHtml %}<li>{{ l | safe }}</li>{% endfor -%}
+            </ul></div></div>
+            {%- endif %}
+            {%- if s.body %}
+            <div class="db-field"><h4 class="db-field__name">Материалы</h4><div class="db-field__value db-field__value_long">{{ s.body | safe }}</div></div>
+            {%- endif %}
+            {%- if not (s.aboutHtml or s.heroes.length or s.noteHtml or s.linksHtml.length or s.body or s.requests.length) %}
+            <p class="db__empty">Карточка пока не заполнена.</p>
+            {%- endif %}
+          </div>
+        </details>
+        {%- endfor %}
+      </div>
+      {%- endfor %}
+      <p class="db__empty" data-nothing hidden>В этом юните историй нет.</p>
+    </section>
+
+    <section class="db__section" id="requests" data-panel aria-labelledby="tab-requests">
+      <h2 class="db__heading">Запрос данных <span class="db__count">{{ db.openRequests }}</span></h2>
+      {%- if db.requests.length %}
+      <div class="db-requests">
+        {%- for g in db.requestGroups %}
+        <div class="db-requests__group">
+          <h3 class="db-requests__story"><a href="#s-{{ g.id }}">{{ g.title }}</a></h3>
+          <div class="db-requests__list">
+            {%- for r in g.requests %}
+            <details class="db-request{% if r.done %} db-request_done{% endif %}">
+              <summary class="db-request__summary">
+                <span class="db-request__title">{{ r.title }}</span>
+                <span class="db-tag db-tag_color_{{ r.statusColor }}">{{ r.status }}</span>
+              </summary>
+              <div class="db-request__body">
+                {{ r.commentHtml | safe }}
+                <dl class="db-request__facts">
+                  {%- if r.hero %}<div><dt>У кого</dt><dd>{{ r.hero }}</dd></div>{% endif %}
+                  {%- if r.types.length %}<div><dt>Что это</dt><dd>{{ r.types | join(", ") | lower }}</dd></div>{% endif %}
+                  {%- if r.stories.length > 1 %}<div><dt>Истории</dt><dd>{% for s in r.stories %}<a href="#s-{{ s.id }}">{{ s.title }}</a>{% if not loop.last %}<br>{% endif %}{% endfor %}</dd></div>{% endif %}
+                </dl>
+              </div>
+            </details>
+            {%- endfor %}
+          </div>
+        </div>
+        {%- endfor %}
+      </div>
+      {%- else %}
+      <p class="db__empty">Сейчас запросов нет.</p>
+      {%- endif %}
+    </section>
+  </main>
+  <script>{% include "./database.js" %}</script>
+</body>
+</html>

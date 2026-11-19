@@ -1,0 +1,120 @@
+/* Страница /database/ — рабочая таблица для заказчика. Цвета и шрифты из токенов сайта. */
+.db {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-text);
+  font-size: 16px;
+  line-height: 24px;
+}
+.db__page { max-width: 1040px; margin: 0 auto; padding: 48px 24px 96px; }
+.db__header { margin-bottom: 48px; }
+.db__title { margin: 0 0 8px; font-family: var(--font-display); font-weight: 500; font-size: 40px; line-height: 44px; }
+.db__meta { margin: 0; color: var(--color-text-tertiary); font-size: 14px; line-height: 20px; }
+.db__section { margin-bottom: 64px; }
+.db__heading { margin: 0 0 20px; font-family: var(--font-display); font-weight: 500; font-size: 28px; line-height: 32px; }
+.db__count { color: var(--color-text-tertiary); font-weight: 400; }
+.db__empty { margin: 0; color: var(--color-text-tertiary); }
+.db a { color: inherit; text-decoration: underline; text-decoration-color: var(--color-line); text-underline-offset: 3px; }
+.db a:hover { color: var(--color-hover); text-decoration-color: currentColor; }
+
+/* вкладки: «Истории» / «Запрос данных» */
+.db-tabs { display: inline-flex; gap: 4px; padding: 4px; margin-bottom: 32px; border-radius: 16px; background: var(--color-bg-mauve); }
+.db-tabs[hidden] { display: none; }
+.db-tabs__item { padding: 10px 20px; border: 0; border-radius: 12px; background: none; color: var(--color-text-secondary); font: inherit; font-size: 17px; line-height: 24px; font-weight: 500; cursor: pointer; }
+.db-tabs__item:hover { color: var(--color-text); }
+.db-tabs__item[aria-selected="true"] { background: var(--color-bg); color: var(--color-text); box-shadow: 0 1px 3px rgba(5, 5, 5, .12); }
+.db-tabs__item:focus-visible { outline: 2px solid var(--color-text); outline-offset: 2px; }
+.db-tabs__count { color: var(--color-text-tertiary); font-weight: 400; }
+.db_tabs .db__heading { display: none; }
+.db_tabs .db__header { margin-bottom: 32px; }
+.db__section[hidden] { display: none; }
+
+/* метки статусов; имена цветов — как в Notion */
+.db-tag { display: inline-block; padding: 2px 10px; border-radius: 12px; background: #e9ecf2; color: #32363e; font-size: 13px; line-height: 20px; font-weight: 500; white-space: nowrap; }
+.db-tag_color_gray { background: #e3e5ea; color: #32363e; }
+.db-tag_color_brown { background: #eee0d6; color: #5a3a22; }
+.db-tag_color_orange { background: #fde3c8; color: #7a3d00; }
+.db-tag_color_yellow { background: #fbedb3; color: #5f4a00; }
+.db-tag_color_green { background: #d3efd9; color: #14522a; }
+.db-tag_color_blue { background: #d6e6fb; color: #123f7a; }
+.db-tag_color_purple { background: #e6dcf8; color: #45227f; }
+.db-tag_color_pink { background: #f9dbe9; color: #7a1c4a; }
+.db-tag_color_red { background: #fddad3; color: #8a1c0a; }
+
+/* запросы данных: слева история, справа её запросы, каждый раскрывается */
+.db-requests { border-top: 1px solid var(--color-line); }
+.db-requests__group { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); gap: 0 32px; padding: 6px 0; border-bottom: 1px solid var(--color-line); }
+.db-requests__story { margin: 0; padding: 8px 0; font-size: 15px; line-height: 22px; font-weight: 400; color: var(--color-text-secondary); }
+.db-request { scroll-margin-top: 16px; }
+.db-request + .db-request { border-top: 1px solid var(--color-bg-mauve); }
+.db-request__summary { display: flex; justify-content: space-between; align-items: baseline; gap: 4px 16px; padding: 8px 0 8px 22px; position: relative; cursor: pointer; list-style: none; }
+.db-request__summary::-webkit-details-marker { display: none; }
+.db-request__summary::before { content: ""; position: absolute; left: 3px; top: 15px; width: 6px; height: 6px; border-right: 2px solid var(--color-text-tertiary); border-bottom: 2px solid var(--color-text-tertiary); transform: rotate(-45deg); }
+.db-request[open] > .db-request__summary::before { transform: rotate(45deg); top: 13px; }
+.db-request__summary:hover .db-request__title { color: var(--color-hover); }
+.db-request__summary:focus-visible { outline: 2px solid var(--color-text); outline-offset: 2px; }
+.db-request__title { font-size: 16px; line-height: 22px; font-weight: 500; }
+.db-request__summary .db-tag { flex-shrink: 0; }
+.db-request_done .db-request__title { color: var(--color-text-tertiary); font-weight: 400; }
+.db-request__body { padding: 0 0 14px 22px; max-width: 560px; font-size: 15px; line-height: 22px; }
+.db-request__body p { margin: 0 0 8px; color: var(--color-text-secondary); }
+.db-request__facts { margin: 0; display: grid; gap: 4px; font-size: 14px; line-height: 20px; }
+.db-request__facts div { display: grid; grid-template-columns: 76px minmax(0, 1fr); gap: 12px; }
+.db-request__facts dt { color: var(--color-text-tertiary); }
+.db-request__facts dd { margin: 0; }
+
+/* фильтр по юниту */
+.db-filter { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px; }
+.db-filter__item { padding: 6px 14px; border: 0; border-radius: 16px; background: var(--color-bg-control); color: var(--color-text); font: inherit; font-size: 14px; line-height: 20px; cursor: pointer; }
+.db-filter__item:hover { background: var(--color-line); }
+.db-filter__item[aria-pressed="true"] { background: var(--color-bg-dark); color: var(--color-text-inverse); }
+.db-filter__item:focus-visible, .db-story__summary:focus-visible { outline: 2px solid var(--color-text); outline-offset: 2px; }
+
+/* истории */
+.db-group { margin-bottom: 40px; }
+.db-group[hidden], .db-story[hidden] { display: none; }
+.db-group__title { margin: 0 0 8px; font-size: 16px; line-height: 24px; font-weight: 400; }
+.db-story { border-bottom: 1px solid var(--color-line); scroll-margin-top: 16px; }
+.db-story:first-of-type { border-top: 1px solid var(--color-line); }
+.db-story__summary { display: flex; justify-content: space-between; align-items: baseline; gap: 8px 24px; padding: 14px 0 14px 28px; position: relative; cursor: pointer; list-style: none; }
+.db-story__summary::-webkit-details-marker { display: none; }
+.db-story__summary::before { content: ""; position: absolute; left: 6px; top: 21px; width: 7px; height: 7px; border-right: 2px solid var(--color-text-tertiary); border-bottom: 2px solid var(--color-text-tertiary); transform: rotate(-45deg); }
+.db-story[open] > .db-story__summary::before { transform: rotate(45deg); top: 19px; }
+.db-story__summary:hover .db-story__title { color: var(--color-hover); }
+.db-story__title { font-size: 18px; line-height: 24px; font-weight: 500; }
+.db-story__side { display: flex; align-items: baseline; gap: 12px; flex-shrink: 0; }
+.db-story__unit { color: var(--color-text-tertiary); font-size: 14px; line-height: 20px; white-space: nowrap; }
+.db-story__body { padding: 4px 0 28px 28px; display: grid; gap: 20px; }
+
+.db-field { display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: 8px 24px; }
+.db-field__name { margin: 0; color: var(--color-text-tertiary); font-size: 14px; line-height: 24px; font-weight: 400; }
+.db-field__value { max-width: 680px; overflow-wrap: anywhere; }
+.db-field__value p, .db-field__value ul, .db-field__value ol, .db-field__value blockquote, .db-field__value figure { margin: 0 0 12px; }
+.db-field__value > :last-child { margin-bottom: 0; }
+.db-field__value ul, .db-field__value ol { padding-left: 20px; }
+.db-field__value ul.db-field__links, .db-field__value ul.db-field__requests { list-style: none; padding: 0; }
+.db-field__requests li { margin-bottom: 6px; }
+.db-field__value h4 { margin: 20px 0 8px; font-size: 16px; line-height: 24px; font-weight: 500; }
+.db-field__value blockquote { padding-left: 16px; border-left: 2px solid var(--color-line); }
+.db-field__value img { max-width: 100%; height: auto; border-radius: 8px; }
+.db-field__value figcaption { color: var(--color-text-tertiary); font-size: 14px; line-height: 20px; }
+.db-field__value pre { white-space: pre-wrap; font-size: 14px; }
+.db-field__value hr { border: 0; border-top: 1px solid var(--color-line); margin: 16px 0; }
+.db-field__value_long { color: var(--color-text-secondary); }
+
+@media (max-width: 767px) {
+  .db__page { padding: 32px 16px 64px; }
+  .db__title { font-size: 30px; line-height: 34px; }
+  .db__heading { font-size: 24px; line-height: 28px; }
+  .db-tabs { display: flex; }
+  .db-tabs__item { flex: 1; padding: 10px 8px; font-size: 15px; }
+  .db-requests__group { grid-template-columns: minmax(0, 1fr); padding: 10px 0; }
+  .db-requests__story { padding: 2px 0; font-size: 14px; line-height: 20px; }
+  .db-request__summary { flex-direction: column; align-items: flex-start; }
+  .db-story__summary { flex-direction: column; }
+  .db-story__side { flex-wrap: wrap; }
+  .db-story__unit { white-space: normal; }
+  .db-story__body { padding-left: 0; }
+  .db-field { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+}
