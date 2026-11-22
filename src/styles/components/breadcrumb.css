@@ -1,0 +1,24 @@
+.breadcrumb__link {
+  display: inline-block;
+  font-family: var(--font-text);
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 24px;
+  color: var(--color-text);
+}
+
+.breadcrumb__icon {
+  display: inline-block;
+  margin: 0 4px 0 0;
+  vertical-align: middle;
+}
+
+.breadcrumb_theme_white .breadcrumb__link {
+  color: var(--color-text-inverse);
+}
+
+@media (hover: hover) {
+  .breadcrumb__link:hover {
+    opacity: var(--opacity-hover);
+  }
+}

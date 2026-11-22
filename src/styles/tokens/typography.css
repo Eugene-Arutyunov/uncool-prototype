@@ -1,0 +1,81 @@
+/* Типографская шкала yandex.ru/company (имена сохранены как у них) */
+:root {
+  --font-text: "YS Text", arial, sans-serif;
+  --font-display: "YS Display", arial, sans-serif;
+
+  /* наше: базовый кегль = 1rem */
+  --root-font-size: 23px;
+
+  /* наше: XL для обложек, YS Display 500 */
+  --h1-xl-font-size: 128px; --h1-xl-line-height: 120px;
+
+  --h1-hero-font-size: 71px; --h1-hero-line-height: 72px;
+  --h1-font-size: 56px; --h1-line-height: 60px;
+  --h2-font-size: 44px; --h2-line-height: 48px;
+  --h3-font-size: 36px; --h3-line-height: 40px;
+  --h4-font-size: 29px; --h4-line-height: 32px;
+  --h5-font-size: 25px; --h5-line-height: 28px;
+  --h6-font-size: 21px; --h6-line-height: 24px;
+
+  --text_primary-size: 21px; --text_primary-line-height: 28px;
+  --text_secondary-size: 17px; --text_secondary-line-height: 24px;
+  --text_caption-size: 15px; --text_caption-line-height: 20px;
+  --text_important-size: 64px; --text_important-line-height: 64px;
+}
+
+@media screen and (min-width: 1920px) {
+  :root {
+    --h1-xl-font-size: 168px; --h1-xl-line-height: 156px;
+    --h1-hero-font-size: 94px; --h1-hero-line-height: 96px;
+  }
+}
+
+@media screen and (min-width: 1279px) and (max-width: 1439px) {
+  :root {
+    --h1-xl-font-size: 112px; --h1-xl-line-height: 104px;
+    --h1-hero-font-size: 63px; --h1-hero-line-height: 64px;
+    --h1-font-size: 50px; --h1-line-height: 52px;
+    --h2-font-size: 38px; --h2-line-height: 44px;
+    --h3-font-size: 32px; --h3-line-height: 36px;
+    --h4-font-size: 26px; --h4-line-height: 28px;
+    --h5-font-size: 22px; --h5-line-height: 24px;
+    --h6-font-size: 18px; --h6-line-height: 22px;
+  }
+}
+
+@media screen and (min-width: 1023px) and (max-width: 1278.9px) {
+  :root {
+    --root-font-size: 19px;
+    --h1-xl-font-size: 88px; --h1-xl-line-height: 84px;
+    --h1-hero-font-size: 50px; --h1-hero-line-height: 52px;
+    --h1-font-size: 40px; --h1-line-height: 44px;
+    --h2-font-size: 31px; --h2-line-height: 34px;
+    --h3-font-size: 26px; --h3-line-height: 28px;
+    --h4-font-size: 21px; --h4-line-height: 24px;
+    --h5-font-size: 17px; --h5-line-height: 20px;
+    --text_primary-size: 17px; --text_primary-line-height: 24px;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1022.9px) {
+  :root {
+    --h1-xl-font-size: 96px; --h1-xl-line-height: 92px;
+    --h1-hero-font-size: 67px; --h1-hero-line-height: 68px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  :root {
+    --root-font-size: 18px;
+    --h1-xl-font-size: 52px; --h1-xl-line-height: 52px;
+    --h1-hero-font-size: 36px; --h1-hero-line-height: 36px;
+    --h1-font-size: 36px; --h1-line-height: 36px;
+    --h2-font-size: 30px; --h2-line-height: 32px;
+    --h3-font-size: 27px; --h3-line-height: 28px;
+    --h4-font-size: 23px; --h4-line-height: 24px;
+    --h5-font-size: 19px; --h5-line-height: 20px;
+    --text_primary-size: 17px; --text_primary-line-height: 24px;
+    --text_secondary-size: 15px; --text_secondary-line-height: 20px;
+    --text_important-size: 52px; --text_important-line-height: 52px;
+  }
+}

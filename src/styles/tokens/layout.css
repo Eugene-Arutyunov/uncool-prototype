@@ -1,0 +1,70 @@
+/*
+  Переменные лейаута yandex.ru/company (имена сохранены как у них).
+  Брейкпоинты: ≤767 / 768–1022.9 / 1023–1278.9 / 1279–1439 / 1440–1919 / ≥1920
+*/
+:root {
+  --header-height: 68px;
+  --header-item-border-radius: 8px;
+  --header-item-backdrop-filter: blur(24px);
+  --opacity-hover: .5;
+  --rounded-element-border-radius: 24px;
+  --text-element-inner-gap-vertical: 40px;
+  --icon-inline-size-s: 16px;
+
+  --layout-max-width: 1848px;
+  --layout-padding-horizontal: 36px;
+  --layout-border-radius: 48px;
+  --section-max-width: 1368px;
+  --text-element-gap: 48px;
+
+  --section-first-child-gap-top: 80px;
+  --section-gap-top: 56px;
+  --section-gap-bottom: 80px;
+  --section-breadcrumb-padding: 40px;
+  --page-content-gap: 48px;
+  --slider-selections-plate-gap: 80px;
+
+  --footer-main-min-height: 384px;
+  --footer-main-padding: 24px;
+  --footer-addon-padding: 56px;
+  --footer-addon-item-margin-top: 16px;
+
+  /* наше: ширины колонок лонгрида */
+  --longread-text-width: 790px;
+  --longread-wide-width: 1296px;
+}
+
+@media screen and (min-width: 768px) and (max-width: 1278.9px) {
+  :root {
+    --layout-max-width: auto;
+    --layout-padding-horizontal: 32px;
+    --layout-border-radius: 40px;
+    --section-max-width: auto;
+    --text-element-gap: 40px;
+    --footer-main-min-height: 405px;
+    --footer-addon-padding: 48px;
+    --footer-addon-item-margin-top: 8px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  :root {
+    --layout-max-width: auto;
+    --layout-padding-horizontal: 12px;
+    --layout-border-radius: 24px;
+    --section-max-width: auto;
+    --section-first-child-gap-top: 48px;
+    --section-gap-top: 32px;
+    --section-gap-bottom: 64px;
+    --section-breadcrumb-padding: 32px;
+    --page-content-gap: 40px;
+    --slider-selections-plate-gap: 64px;
+    --text-element-gap: 32px;
+    --text-element-inner-gap-vertical: 24px;
+    --rounded-element-border-radius: 20px;
+    --footer-main-min-height: 360px;
+    --footer-main-padding: 32px;
+    --footer-addon-padding: 40px;
+    --footer-addon-item-margin-top: 8px;
+  }
+}

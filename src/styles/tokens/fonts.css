@@ -1,0 +1,78 @@
+/* YS Text / YS Display — подключены с yastatic, как на yandex.ru/company */
+@font-face{
+  font-family:YS Text;
+  font-weight:300;
+  font-style:normal;
+  font-display:fallback;
+  src:url(https://yastatic.net/s3/company-ir/yastatic/islands/_/V3PCI5t9wLQulFhlxmM-nRrX-LM.woff2) format("woff2"),url(https://yastatic.net/s3/company-ir/yastatic/islands/_/k6JccBlR5c7Kq8MWbMSi_5IhJFM.woff) format("woff")
+}
+@font-face{
+  font-family:YS Text;
+  font-weight:300;
+  font-style:italic;
+  font-display:fallback;
+  src:url(https://yastatic.net/s3/company-ir/yastatic/islands/_/Z7ZUyW-3Gr8a1WoaF2X70JPnHqQ.woff2) format("woff2"),url(https://yastatic.net/s3/company-ir/yastatic/islands/_/yAhaw8H_7JPnro_s-q2xJXuaDnU.woff) format("woff")
+}
+@font-face{
+  font-family:YS Text;
+  font-weight:400;
+  font-style:normal;
+  font-display:fallback;
+  src:url(https://yastatic.net/s3/company-ir/yastatic/islands/_/KK0rDEa2iWz8WgDULp1jAS8q14w.woff2) format("woff2"),url(https://yastatic.net/s3/company-ir/yastatic/islands/_/Sc6Z_UiRWPbsutyXbwxwb1SMNjw.woff) format("woff")
+}
+@font-face{
+  font-family:YS Text;
+  font-weight:400;
+  font-style:italic;
+  font-display:fallback;
+  src:url(https://yastatic.net/s3/company-ir/yastatic/islands/_/pMpSprJxnRUXXmusaDVZWOsU20E.woff2) format("woff2"),url(https://yastatic.net/s3/company-ir/yastatic/islands/_/hyO9p155BRxX0R1FtmPbWdrK_PI.woff) format("woff")
+}
+@font-face{
+  font-family:YS Text;
+  font-weight:500;
+  font-style:normal;
+  font-display:fallback;
+  src:url(https://yastatic.net/s3/company-ir/yastatic/islands/_/V2te_I_TgULQTmO70ObZxmmFZuY.woff2) format("woff2"),url(https://yastatic.net/s3/company-ir/yastatic/islands/_/AtbYV1Dr4EXQOMlXaYUzWXjYx9Q.woff) format("woff")
+}
+@font-face{
+  font-family:YS Text;
+  font-weight:500;
+  font-style:italic;
+  font-display:fallback;
+  src:url(https://yastatic.net/s3/company-ir/yastatic/islands/_/RcEzPhj_CVNS4DRd6JPyrDrRbF8.woff2) format("woff2"),url(https://yastatic.net/s3/company-ir/yastatic/islands/_/CZN01D0zg0z8oE7BSb_lU-_4DNY.woff) format("woff")
+}
+@font-face{
+  font-family:YS Text;
+  font-weight:700;
+  font-style:normal;
+  font-display:fallback;
+  src:url(https://yastatic.net/s3/company-ir/yastatic/islands/_/tsAJTBiroZH9oATHPwoKjId2x_M.woff2) format("woff2"),url(https://yastatic.net/s3/company-ir/yastatic/islands/_/exohXbCYwlBRtAvWCYTO8wOnx4w.woff) format("woff")
+}
+@font-face{
+  font-family:YS Text;
+  font-weight:700;
+  font-style:italic;
+  font-display:fallback;
+  src:url(https://yastatic.net/s3/company-ir/yastatic/islands/_/WJlUcWAljaUArZ7ErQjGCMps1dg.woff2) format("woff2"),url(https://yastatic.net/s3/company-ir/yastatic/islands/_/KJwBOYY0De22nZEJjWLOtRSj1xg.woff) format("woff")
+}
+@font-face{
+  font-family:YS Display;
+  font-weight:300;
+  font-style:normal;
+  font-display:fallback;
+  src:url(https://yastatic.net/s3/company-ir/s3/home/fonts/ys/1/display-light.woff2) format("woff2"),url(https://yastatic.net/s3/company-ir/s3/home/fonts/ys/1/display-light.woff) format("woff")
+}
+@font-face{
+  font-family:YS Display;
+  font-weight:400;
+  font-style:normal;
+  font-display:fallback;
+  src:url(https://yastatic.net/s3/company-ir/s3/home/fonts/ys/1/display-regular.woff2) format("woff2"),url(https://yastatic.net/s3/company-ir/s3/home/fonts/ys/1/display-regular.woff) format("woff")
+}
+@font-face{
+  font-family:YS Display;
+  font-weight:500;
+  font-style:normal;
+  font-display:fallback;
+  src:url(https://yastatic.net/s3/company-ir/s3/home/fonts/ys/1/display-medium.woff2) format("woff2"),url(https://yastatic.net/s3/company-ir/s3/home/fonts/ys/1/display-medium.woff) format("woff")
+}

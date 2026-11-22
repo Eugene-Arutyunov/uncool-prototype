@@ -1,0 +1,77 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  # раз в сутки (06:17 по Москве) забираем свежие данные из Notion для /database/
+  schedule:
+    - cron: "17 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+
+      # Синхронизация с Notion: по расписанию и при ручном запуске.
+      # При обычном пуше сайт собирается из данных, которые уже лежат в репозитории.
+      - name: Sync Notion
+        id: notion
+        if: github.event_name != 'push'
+        env:
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+        run: |
+          if [ -z "$NOTION_TOKEN" ]; then
+            if [ "${{ github.event_name }}" = "schedule" ]; then
+              echo "::error::Нет секрета NOTION_TOKEN — данные /database/ не обновлены"
+              exit 1
+            fi
+            echo "::warning::Нет секрета NOTION_TOKEN — собираем из данных в репозитории"
+            exit 0
+          fi
+          node scripts/notion-sync.mjs
+          echo "synced=true" >> "$GITHUB_OUTPUT"
+
+      # Коммитим только настоящие изменения; одна лишь дата синхронизации коммита не создаёт.
+      - name: Commit Notion data
+        if: steps.notion.outputs.synced == 'true'
+        run: |
+          git add -A src/database/data src/assets/database
+          if git diff --cached --quiet -I '"syncedAt"'; then
+            echo "В Notion ничего не изменилось"
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit -m "Данные из Notion для /database/"
+            git push
+          fi
+
+      - run: npm run build
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

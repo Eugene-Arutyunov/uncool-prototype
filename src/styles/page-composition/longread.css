@@ -1,0 +1,230 @@
+/*
+  Лонгрид: сетка из трёх вложенных колонок.
+    text  — колонка чтения (--longread-text-width), по умолчанию для всех детей
+    wide  — широкая (--longread-wide-width), для крупных картинок и видео
+    full  — от края до края секции
+  Модификаторы ребёнка: .longread__wide, .longread__full
+*/
+
+.longread {
+  --longread-gutter: calc((var(--longread-wide-width) - var(--longread-text-width)) / 2);
+
+  display: grid;
+  grid-template-columns:
+    [full-start] minmax(var(--layout-padding-horizontal), 1fr)
+    [wide-start] minmax(0, var(--longread-gutter))
+    [text-start] min(var(--longread-text-width), 100% - var(--layout-padding-horizontal) * 2)
+    [text-end] minmax(0, var(--longread-gutter))
+    [wide-end] minmax(var(--layout-padding-horizontal), 1fr)
+    [full-end];
+  font-family: var(--font-text);
+  font-size: var(--text_primary-size);
+  line-height: var(--text_primary-line-height);
+}
+
+.longread > * {
+  grid-column: text;
+  margin-top: 0;
+  margin-bottom: var(--text_primary-line-height);
+}
+
+.longread > *:last-child {
+  margin-bottom: 0;
+}
+
+.longread > .longread__wide {
+  grid-column: wide;
+}
+
+.longread > .longread__full {
+  grid-column: full;
+}
+
+/* Текст */
+
+.longread p {
+  word-wrap: break-word;
+}
+
+.longread__lead {
+  font-family: var(--font-display);
+  font-size: var(--h5-font-size);
+  line-height: var(--h5-line-height);
+}
+
+.longread h2,
+.longread h3,
+.longread h4 {
+  font-family: var(--font-display);
+  font-weight: 400;
+}
+
+.longread h2 {
+  margin: 72px 0 32px;
+  font-size: var(--h3-font-size);
+  line-height: var(--h3-line-height);
+}
+
+.longread h3 {
+  margin: 56px 0 24px;
+  font-size: var(--h4-font-size);
+  line-height: var(--h4-line-height);
+}
+
+.longread h4 {
+  margin: 40px 0 16px;
+  font-size: var(--h5-font-size);
+  line-height: var(--h5-line-height);
+}
+
+.longread :is(h2, h3, h4) + :is(h2, h3, h4) {
+  margin-top: 0;
+}
+
+.longread a {
+  text-decoration: underline;
+  color: var(--color-text);
+}
+
+@media (hover: hover) {
+  .longread a:hover {
+    opacity: var(--opacity-hover);
+  }
+}
+
+.longread b,
+.longread strong {
+  font-weight: 500;
+}
+
+.longread ul,
+.longread ol {
+  padding-left: 1.2em;
+}
+
+.longread li {
+  margin: 0 0 8px;
+}
+
+.longread li:last-child {
+  margin-bottom: 0;
+}
+
+.longread hr {
+  width: 100%;
+  height: 1px;
+  margin-top: var(--text-element-gap);
+  margin-bottom: var(--text-element-gap);
+  border: none;
+  background-color: var(--color-line);
+}
+
+/* Цитата-плашка, как .wiki-bquot у них */
+
+.longread blockquote {
+  margin-top: var(--text-element-gap);
+  margin-bottom: var(--text-element-gap);
+  margin-inline: 0;
+  padding: var(--text-element-gap) var(--text-element-inner-gap-vertical);
+  border-radius: var(--rounded-element-border-radius);
+  background: var(--color-bg-mauve);
+}
+
+.longread blockquote p {
+  margin: 0 0 var(--text_primary-line-height);
+  font-family: var(--font-display);
+  font-size: var(--h4-font-size);
+  line-height: var(--h4-line-height);
+}
+
+.longread blockquote p:last-of-type {
+  margin-bottom: 0;
+}
+
+.longread blockquote cite {
+  display: block;
+  margin-top: 24px;
+  font-style: normal;
+  font-size: var(--text_secondary-size);
+  line-height: var(--text_secondary-line-height);
+  color: var(--color-text-secondary);
+}
+
+/* Медиа: картинки, видео, подписи */
+
+.longread figure {
+  margin-top: var(--text-element-gap);
+  margin-bottom: var(--text-element-gap);
+  margin-inline: 0;
+}
+
+.longread figure img,
+.longread figure video,
+.longread__video {
+  width: 100%;
+  height: auto;
+  border-radius: var(--rounded-element-border-radius);
+}
+
+.longread__full figure img,
+.longread figure.longread__full img,
+.longread figure.longread__full video {
+  border-radius: 0;
+}
+
+.longread__video {
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  background: var(--color-bg-mauve);
+}
+
+.longread__video iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: inherit;
+}
+
+.longread figcaption {
+  max-width: var(--longread-text-width);
+  margin-top: 16px;
+  font-size: var(--text_caption-size);
+  line-height: var(--text_caption-line-height);
+  color: var(--color-text-tertiary);
+}
+
+.longread figure.longread__full figcaption {
+  padding: 0 var(--layout-padding-horizontal);
+}
+
+/* Две картинки рядом */
+
+.longread__pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.longread__pair img {
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+@media screen and (max-width: 767px) {
+  .longread h2 {
+    margin: 56px 0 24px;
+  }
+
+  .longread h3 {
+    margin: 40px 0 16px;
+  }
+
+  .longread h4 {
+    margin: 24px 0 8px;
+  }
+
+  .longread__pair {
+    grid-template-columns: 1fr;
+  }
+}

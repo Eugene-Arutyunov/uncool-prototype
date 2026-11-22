@@ -1,0 +1,13 @@
+/* Короткий текст о проекте под сеткой */
+.about {
+  max-width: 38rem;
+  margin-top: var(--text-element-gap);
+}
+
+.about p {
+  margin: 0 0 1.35em;
+}
+
+.about p:last-child {
+  margin-bottom: 0;
+}

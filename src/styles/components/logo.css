@@ -1,0 +1,34 @@
+.logo {
+  position: relative;
+}
+
+.logo__link {
+  display: inline-block;
+}
+
+.logo__image-full {
+  pointer-events: auto;
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  background-size: 100%;
+}
+
+.logo_tld_ru .logo__image-full {
+  width: 117px;
+  height: 34px;
+}
+
+.logo_tld_ru.logo_theme_black .logo__image-full {
+  background-image: url(https://yastatic.net/s3/company-ir/s3/company-static/static/_/bee2b58e383f029658e10d854164aa05.svg);
+}
+
+.logo_tld_ru.logo_theme_white .logo__image-full {
+  background-image: url(https://yastatic.net/s3/company-ir/s3/company-static/static/_/46b42a6ee9577227ee234b8a56f44281.svg);
+}
+
+@media screen and (max-width: 767px) {
+  .logo_tld_ru .logo__image-full {
+    width: 96px;
+    height: 28px;
+  }
+}

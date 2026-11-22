@@ -1,0 +1,237 @@
+/*
+  Вид «пачка»: карточки веером в перспективе, лента листается колесом и перетаскиванием.
+  Карточки — клоны карточек сетки (.stories__item + .pack__card), выровнены по низу.
+  Позиции, углы и z-index считает /assets/scripts/pack.js, здесь только оформление.
+  Переменные --pack-* выставляет панель параметров.
+*/
+
+.pack {
+  display: none;
+}
+
+html[data-view="pack"] {
+  overflow: hidden;
+}
+
+html[data-view="pack"] .about,
+html[data-view="pack"] .footer {
+  display: none;
+}
+
+/*
+  Лента — на всю страницу: pack.js переносит .pack прямо в body,
+  она лежит под контентом страницы (z-index 1 < 2 у .app__content).
+  Контент пропускает мышь насквозь, кроме breadcrumb, переключателя, логотипа и столбика.
+*/
+html[data-view="pack"] .page__section {
+  background: none;
+}
+
+html[data-view="pack"] .app__content {
+  pointer-events: none;
+}
+
+html[data-view="pack"] .breadcrumb,
+html[data-view="pack"] .segmented,
+html[data-view="pack"] .stories__heading,
+html[data-view="pack"] .stories__list {
+  pointer-events: auto;
+}
+
+/*
+  Слева остаётся первая ячейка сетки — логотип, на том же месте и того же размера,
+  под ним столбик названий на белой плашке шириной в двойной модуль,
+  в две колонки (вторая короче, число строк первой — --list-rows).
+  Остальные карточки сетки скрыты.
+*/
+.stories__list {
+  display: none;
+}
+
+html[data-view="pack"] .stories > .stories__item {
+  display: none;
+}
+
+html[data-view="pack"] .stories__list {
+  --rounded-radius: 1.5rem;
+
+  display: grid;
+  grid-column: 1 / span 2;
+  grid-template-rows: repeat(var(--list-rows, 9), auto);
+  grid-auto-flow: column;
+  gap: 0 1.2rem;
+  margin: 0;
+  padding: .9rem 1.1rem;
+  list-style: none;
+  background: var(--color-bg);
+}
+
+.stories__list-link {
+  display: block;
+  font-size: .7rem;
+  line-height: 1.45;
+  transition: color .4s;
+}
+
+.stories__list-link_active {
+  color: var(--color-hover);
+  transition: none;
+}
+
+@media screen and (max-width: 767px) {
+  html[data-view="pack"] .stories__list {
+    grid-column: 1 / -1;
+  }
+}
+
+html[data-view="pack"] .pack {
+  display: block;
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: grab;
+}
+
+html[data-view="pack"] .pack_dragging {
+  cursor: grabbing;
+}
+
+.pack__stage {
+  position: absolute;
+  inset: 0;
+  perspective: var(--pack-perspective, 1000px);
+}
+
+.pack__card {
+  position: absolute;
+  bottom: var(--pack-bottom, 2.5rem);
+  left: 0;
+  width: var(--pack-size, 16rem);
+  will-change: transform;
+}
+
+/* в ленте карточки без подписей — названия в столбике слева */
+.pack__card .stories__title {
+  display: none;
+}
+
+/* во время перетаскивания ховер карточек не срабатывает */
+.pack_dragging .pack__card {
+  pointer-events: none;
+}
+
+/*
+  Временная панель параметров.
+  Угол экрана — зона наведения: в ней появляется кнопка «Настройки»,
+  по клику открывается панель, × её закрывает.
+*/
+.pack-settings {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 10000;
+  min-width: 14rem;
+  min-height: 7rem;
+  padding: 12px;
+  display: flex;
+  align-items: flex-end;
+  cursor: default;
+}
+
+.pack-settings__toggle {
+  padding: 6px 14px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .85);
+  box-shadow: 0 2px 16px rgba(5, 5, 5, .12);
+  backdrop-filter: blur(12px);
+  font-family: var(--font-text);
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--color-text);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity .3s;
+}
+
+.pack-settings:hover .pack-settings__toggle,
+.pack-settings__toggle:focus-visible {
+  opacity: 1;
+  transition: none;
+}
+
+@media (hover: none) {
+  .pack-settings__toggle {
+    opacity: 1;
+  }
+}
+
+.pack-settings_open .pack-settings__toggle,
+.pack-settings:not(.pack-settings_open) .pack-controls {
+  display: none;
+}
+
+.pack-controls {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 9rem 2.6rem;
+  gap: 4px 10px;
+  align-items: center;
+  padding: 32px 14px 12px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, .85);
+  box-shadow: 0 2px 16px rgba(5, 5, 5, .12);
+  backdrop-filter: blur(12px);
+  font-family: var(--font-text);
+  font-size: 13px;
+  line-height: 18px;
+  cursor: default;
+}
+
+.pack-controls input[type="range"] {
+  width: 100%;
+  margin: 0;
+}
+
+.pack-controls output {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-secondary);
+}
+
+.pack-controls__close {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  font-size: 20px;
+  line-height: 24px;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+}
+
+.pack-controls__close:hover {
+  color: var(--color-text);
+  background: var(--color-bg-control);
+}
+
+.pack-controls__reset {
+  grid-column: 1 / -1;
+  justify-self: start;
+  margin-top: 4px;
+  padding: 3px 10px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--color-bg-control);
+  font: inherit;
+  cursor: pointer;
+}

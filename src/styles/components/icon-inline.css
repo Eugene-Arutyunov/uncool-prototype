@@ -1,0 +1,12 @@
+.icon-inline {
+  display: inline-block;
+}
+
+.icon-inline svg {
+  display: block;
+}
+
+.icon-inline_size_s {
+  width: var(--icon-inline-size-s);
+  height: var(--icon-inline-size-s);
+}
