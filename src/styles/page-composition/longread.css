@@ -46,10 +46,173 @@
   word-wrap: break-word;
 }
 
+.longread__title {
+  margin: 0 0 var(--text_primary-line-height);
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--h1-hero-font-size);
+  line-height: var(--h1-hero-line-height);
+}
+
 .longread__lead {
   font-family: var(--font-display);
   font-size: var(--h5-font-size);
   line-height: var(--h5-line-height);
+}
+
+.longread__lead_italic {
+  font-style: italic;
+}
+
+/* Плашки людей под h1 — как ids__pill на Shift */
+.longread__heroes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+  margin: -0.4em 0 var(--text_primary-line-height);
+}
+
+.longread__pill {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.45em;
+  padding: 0.3em 0.85em;
+  line-height: 1.6;
+  background: color-mix(in srgb, var(--color-bg-mauve) 65%, var(--color-bg));
+  border-radius: 999px;
+  font-family: var(--font-text);
+  font-size: var(--text_secondary-size);
+  color: var(--color-text);
+}
+
+.longread__pill-photo {
+  align-self: center;
+  width: 1.6em;
+  height: 1.6em;
+  margin-left: -0.5em;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Список людей: фото в круге + «Имя Фамилия.» жирным в одном абзаце */
+.longread__people-list {
+  display: grid;
+  gap: 6px;
+  margin: 0 0 var(--text_primary-line-height);
+}
+
+.longread__people-list p {
+  margin: 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: var(--text_secondary-size);
+  line-height: var(--text_secondary-line-height);
+}
+
+.longread__people-photo {
+  flex: none;
+  width: 2.4em;
+  height: 2.4em;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.longread__placeholder {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  border-radius: var(--rounded-element-border-radius);
+  background: #dcdcdc;
+}
+
+.longread__events {
+  list-style: none;
+  margin: 0 0 var(--text_primary-line-height);
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.longread__events li {
+  margin: 0;
+  display: grid;
+  grid-template-columns: 7.5em 1fr;
+  gap: 12px 16px;
+  align-items: baseline;
+  font-size: var(--text_secondary-size);
+  line-height: var(--text_secondary-line-height);
+}
+
+.longread__events time,
+.longread__events .longread__events-when {
+  font-family: var(--font-display);
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.longread__events .longread__events-gap {
+  color: var(--color-text-tertiary);
+  font-style: italic;
+}
+
+@media screen and (max-width: 767px) {
+  .longread__events li {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+}
+
+.longread__sources {
+  margin: 0 0 var(--text_primary-line-height);
+  padding: 20px 24px;
+  border-radius: var(--rounded-element-border-radius);
+  background: #e8e8e8;
+}
+
+.longread__sources ul {
+  margin: 0;
+  padding-left: 1.1em;
+}
+
+.longread__sources li {
+  margin: 0 0 10px;
+  font-size: var(--text_secondary-size);
+  line-height: var(--text_secondary-line-height);
+}
+
+.longread__sources li:last-child {
+  margin-bottom: 0;
+}
+
+.longread__footnote-star {
+  margin: 0 0 12px;
+  font-size: var(--text_secondary-size);
+  line-height: var(--text_secondary-line-height);
+  color: var(--color-text-secondary);
+}
+
+.longread__footnotes {
+  padding-left: 1.4em;
+  font-size: var(--text_secondary-size);
+  line-height: var(--text_secondary-line-height);
+  color: var(--color-text-secondary);
+}
+
+.longread__footnotes li {
+  margin: 0 0 10px;
+}
+
+.longread__footnotes li:last-child {
+  margin-bottom: 0;
+}
+
+.longread sup a {
+  text-decoration: none;
+  color: var(--color-text-tertiary);
+}
+
+.longread figcaption {
+  margin-top: 12px;
 }
 
 .longread h2,
@@ -119,35 +282,49 @@
   background-color: var(--color-line);
 }
 
-/* Цитата-плашка, как .wiki-bquot у них */
+/* Цитата: большой кегль, кавычки в тексте, жирный курсив; автор справа внизу */
 
 .longread blockquote {
   margin-top: var(--text-element-gap);
   margin-bottom: var(--text-element-gap);
   margin-inline: 0;
-  padding: var(--text-element-gap) var(--text-element-inner-gap-vertical);
-  border-radius: var(--rounded-element-border-radius);
-  background: var(--color-bg-mauve);
+  padding: 0;
+  background: none;
+  border: none;
 }
 
 .longread blockquote p {
-  margin: 0 0 var(--text_primary-line-height);
+  margin: 0;
   font-family: var(--font-display);
   font-size: var(--h4-font-size);
   line-height: var(--h4-line-height);
+  font-weight: 500;
+  font-style: italic;
 }
 
-.longread blockquote p:last-of-type {
-  margin-bottom: 0;
+.longread blockquote p:not(:last-of-type) {
+  margin-bottom: 0.6em;
 }
 
-.longread blockquote cite {
-  display: block;
-  margin-top: 24px;
+.longread__quote-author {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.45em;
+  margin-top: 16px;
+  font-family: var(--font-text);
+  font-size: var(--text_caption-size);
+  line-height: var(--text_caption-line-height);
   font-style: normal;
-  font-size: var(--text_secondary-size);
-  line-height: var(--text_secondary-line-height);
+  font-weight: 400;
   color: var(--color-text-secondary);
+}
+
+.longread__quote-author img {
+  width: 1.6em;
+  height: 1.6em;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 /* Медиа: картинки, видео, подписи */
@@ -198,17 +375,26 @@
   padding: 0 var(--layout-padding-horizontal);
 }
 
-/* Две картинки рядом */
+/* Две картинки рядом (скрины интерфейса) */
 
 .longread__pair {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
+  margin-bottom: var(--text_primary-line-height);
+}
+
+.longread__pair figure {
+  margin: 0;
 }
 
 .longread__pair img {
-  aspect-ratio: 4 / 5;
-  object-fit: cover;
+  width: 100%;
+  height: auto;
+  aspect-ratio: auto;
+  object-fit: contain;
+  border-radius: var(--rounded-element-border-radius);
+  background: #f0f0f0;
 }
 
 @media screen and (max-width: 767px) {

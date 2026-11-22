@@ -8,7 +8,13 @@
 */
 const stories = [
   { slug: "naydyotsya-vsyo", title: "«Найдётся всё»", image: "naydyotsya-vsyo.png", ratio: "3 / 2" },
-  { slug: "yet-another-indexer", title: "Yet Another Indexer: откуда взялось имя", short: "Yet Another Indexer", image: "yet-another-indexer.png" },
+  {
+    slug: "yet-another-indexer",
+    title: "Yet Another Indexer: откуда взялось имя",
+    short: "Yet Another Indexer",
+    image: "yet-another-indexer.png",
+    dedicatedPage: true,
+  },
   { slug: "koldunshchiki", title: "Колдунщики", image: "koldunshchiki.png", ratio: "1", position: "left top" },
   { slug: "probki", title: "Пробки в баллах", image: "probki.png" },
   { slug: "alisa", title: "Алиса", image: "alisa.png", ratio: "1" },
@@ -19,6 +25,27 @@ const stories = [
   { slug: "bespilotniki", title: "Беспилотники", image: "bespilotniki.jpg", ratio: "7 / 5" },
   { slug: "taksi", title: "Такси за пять минут", image: "taksi.jpg", ratio: "3 / 4" },
   { slug: "samokaty", title: "Самокаты рулят", image: "samokaty.jpg", ratio: "3 / 2" },
+  {
+    slug: "morfologiya-i-poisk",
+    title: "Морфология и поиск",
+    short: "Морфология и поиск",
+    ratio: "3 / 2",
+    dedicatedPage: true,
+  },
+  {
+    slug: "volozh-ne-zakryl-arkadiyu",
+    title: "Волож не закрыл убыточную «Аркадию», а вложился",
+    short: "Волож не закрыл «Аркадию»",
+    ratio: "3 / 2",
+    dedicatedPage: true,
+  },
+  {
+    slug: "s-bozhey-pomoshchyu",
+    title: "С Божьей помощью",
+    short: "С Божьей помощью",
+    ratio: "3 / 2",
+    dedicatedPage: true,
+  },
   { slug: "market", title: "Маркет", image: "market.jpg", ratio: "1" },
   { slug: "kinopoisk", title: "Кинопоиск", image: "kinopoisk.jpg", ratio: "8 / 5" },
   { slug: "lavka", title: "Лавка за 15 минут", image: "lavka.jpg" },

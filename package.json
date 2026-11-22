@@ -5,9 +5,12 @@
   "description": "Прототип раздела «История Яндекса»",
   "scripts": {
     "dev": "eleventy --serve",
-    "build": "eleventy"
+    "build": "eleventy",
+    "edit": "node tools/case-editor/server.cjs",
+    "test:edit": "node --test tools/case-editor/server.test.cjs"
   },
   "devDependencies": {
-    "@11ty/eleventy": "^3.0.0"
+    "@11ty/eleventy": "^3.0.0",
+    "htmlparser2": "^7.2.0"
   }
 }

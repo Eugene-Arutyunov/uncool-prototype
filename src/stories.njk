@@ -1,21 +1,22 @@
 ---
 layout: layouts/base.njk
 pagination:
-  data: stories
+  data: storyPages
   size: 1
   alias: story
 permalink: "stories/{{ story.slug }}/"
 breadcrumb:
   title: 30 историй Яндекса
   url: /
+hideTitle: true
 eleventyComputed:
   title: "{{ story.title }}"
 ---
 <article class="longread">
   {%- if story.image %}
-  <figure>
+  <figure class="longread__wide">
     <img src="{{ story.image }}" alt="">
   </figure>
   {%- endif %}
-  <p>История готовится.</p>
+  <h1 class="longread__title">{{ story.title }}</h1>
 </article>
