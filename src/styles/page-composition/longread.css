@@ -282,6 +282,42 @@
   background-color: var(--color-line);
 }
 
+.longread__table-wrap {
+  margin: 0 0 var(--text_primary-line-height);
+  overflow-x: auto;
+}
+
+.longread__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text_secondary-size);
+  line-height: var(--text_secondary-line-height);
+}
+
+.longread__table th,
+.longread__table td {
+  padding: 10px 12px;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--color-line);
+}
+
+.longread__table th {
+  font-family: var(--font-display);
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.longread__table td {
+  color: var(--color-text-secondary);
+}
+
+.longread__table td:first-child {
+  font-weight: 500;
+  color: var(--color-text);
+  white-space: nowrap;
+}
+
 /* Цитата: большой кегль, кавычки в тексте, жирный курсив; автор справа внизу */
 
 .longread blockquote {
