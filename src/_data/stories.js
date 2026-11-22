@@ -43,6 +43,7 @@ const stories = [
     slug: "s-bozhey-pomoshchyu",
     title: "С Божьей помощью",
     short: "С Божьей помощью",
+    image: "bible-web/bibl_01.gif",
     ratio: "3 / 2",
     dedicatedPage: true,
   },
