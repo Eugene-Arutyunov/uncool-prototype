@@ -39,7 +39,7 @@
     </div>
     {% include "partials/footer.njk" %}
   </div>
-  {%- set reviewComments = comments[page.url] if isLocalPreview else null %}
+  {%- set reviewComments = comments[page.url] %}
   {%- if reviewComments and reviewComments.length %}
   {% include "partials/review-comments.njk" %}
   {%- endif %}
