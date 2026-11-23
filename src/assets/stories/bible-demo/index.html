@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Библейский компьютерный справочник (демо, 1996)</title>
+  <link rel="stylesheet" href="boxedwine.css">
+  <style>
+    /* Page colour matches the Wine desktop, so the area around the canvas blends in. */
+    html, body { height: 100%; margin: 0; background: #3a6ea5; overflow: hidden; }
+    body { display: flex; flex-direction: column; font: 14px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif; color: #fff; }
+    #stage { position: relative; flex: 1 1 auto; min-height: 0; display: flex; align-items: center; justify-content: center; }
+    #dropzone, div.emscripten_border { border: 0; line-height: 0; }
+    /* The canvas keeps the desktop's proportions and shrinks to fit the frame, never growing past 1:1;
+       the emulator rescales mouse coordinates itself. --screen-w/h are set from the resolution parameter. */
+    :root { --screen-w: 960; --screen-h: 630; }
+    canvas#canvas {
+      display: block; border: 0; padding: 0; margin: 0; outline: none;
+      width: min(100vw, calc((100vh - 30px) * var(--screen-w) / var(--screen-h)), calc(var(--screen-w) * 1px)) !important;
+      height: auto !important; aspect-ratio: var(--screen-w) / var(--screen-h);
+    }
+    #overlay { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 16px; text-align: center; background: #3a6ea5; }
+    #overlay h1 { margin: 0; font-size: 20px; font-weight: 600; }
+    #overlay p { margin: 0; max-width: 34em; opacity: .9; }
+    #overlay progress { width: 220px; }
+    #overlay .spinner { height: 28px; width: 28px; border-width: 5px; margin: 0; }
+    #spinner { display: none !important; }
+    #status:empty { display: none; }
+    #retry { padding: 8px 18px; border: 0; border-radius: 999px; background: #fff; color: #1c3d63; font: inherit; cursor: pointer; }
+    #hint { flex: 0 0 30px; display: flex; align-items: center; justify-content: center; padding: 0 12px; font-size: 12px; background: rgba(0, 0, 0, .25); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    #chrome { display: none; }
+  </style>
+</head>
+<body>
+  <div id="stage">
+    <div id="dropzone">
+      <div class="emscripten_border">
+        <canvas class="emscripten" id="canvas" tabindex="-1" oncontextmenu="event.preventDefault()"></canvas>
+      </div>
+    </div>
+
+    <div id="overlay">
+      <h1>Библейский компьютерный справочник</h1>
+      <p id="overlayText">Загружаем программу 1996 года. Это занимает до минуты.</p>
+      <div class="spinner" id="busy"></div>
+      <button id="retry" type="button" hidden onclick="location.reload()">Запустить заново</button>
+      <div id="loading">
+        <figure id="spinner" hidden></figure><!-- the launcher toggles this one; ours is #busy -->
+        <div id="status">Загрузка…</div>
+        <progress value="0" max="100" id="progress" hidden></progress>
+      </div>
+    </div>
+  </div>
+
+  <div id="hint">Поиск: включите русскую раскладку, введите слово в поле «Слова» и нажмите Enter.</div>
+
+  <!-- Controls the Boxedwine launcher expects to find on the page. They stay hidden. -->
+  <div id="chrome">
+    <button id="startbtn" onclick="start()">Start</button>
+    <button id="uploadbtn">Add File(s)</button>
+    <input id="upload" name="upload" type="file" multiple>
+    <button id="downloadbtn">Get File(s)</button>
+    <a id="modalLink" href="#openModal">Open</a>
+    <a id="modalLinkExe" href="#openModalExe">Open</a>
+    <span id="sound-checkbox"><input type="checkbox" id="soundToggle" onclick="toggleSound();"></span>
+    <input type="checkbox" id="pointerLock">
+    <input type="checkbox" id="showConsole" onclick="toggleConsole();">
+    <input type="checkbox" id="resize">
+    <textarea id="output" rows="8"></textarea>
+    <div id="openModal" class="modalDialog"><div>
+      <a href="#close" class="close">X</a>
+      <input id="selectedItem" type="text" readonly>
+      <div id="tree"></div>
+      <h3 id="loadStatus"></h3>
+    </div></div>
+    <div id="openModalExe" class="modalDialog"><div>
+      <a id="openModalExeClick" href="#close" class="close">X</a>
+      <div id="message"></div>
+      <div id="items"></div>
+    </div></div>
+  </div>
+
+  <script>
+    // Default launch: the program archive, the keyboard helper that starts rbible.exe,
+    // and a 960x630 desktop. rbkbd.exe centres the program window on it with a 32px margin,
+    // so the whole window is visible with the desktop around it.
+    // The Russian locale makes the program show its Russian title and menus.
+    if (!/[?&]p=/.test(location.search)) history.replaceState(null, '', location.pathname + '?app=rbible&p=rbkbd.exe&resolution=960x630&env=%22LC_ALL:ru_RU.UTF-8%22');
+    (function () {
+      var m = /[?&]resolution=(\d+)x(\d+)/.exec(location.search);
+      if (m) { document.documentElement.style.setProperty('--screen-w', m[1]); document.documentElement.style.setProperty('--screen-h', m[2]); }
+    })();
+
+    // While the program boots, drive the emulator from a MessageChannel instead of requestAnimationFrame.
+    // Browsers slow or stop animation frames in background tabs, and Wine then misses its own startup
+    // timeouts and never opens a window. Once the window is drawn, normal frames take over again.
+    (function () {
+      var nativeRaf = window.requestAnimationFrame.bind(window);
+      var booting = true, queue = [], channel = new MessageChannel();
+      channel.port1.onmessage = function () { var f = queue.shift(); if (f) f(performance.now()); };
+      window.requestAnimationFrame = function (cb) {
+        if (!booting) return nativeRaf(cb);
+        queue.push(cb); channel.port2.postMessage(0); return 0;
+      };
+      window.rbBootDone = function () { booting = false; };
+    })();
+
+    // The emulator keeps writing its speed into the tab title; keep ours.
+    (function () {
+      var title = document.title;
+      try { Object.defineProperty(document, 'title', { get: function () { return title; }, set: function () {} }); } catch (e) {}
+    })();
+
+    // The loading screen stays until the program window is actually drawn:
+    // the middle of the canvas stops being the empty Wine desktop colour.
+    (function () {
+      var overlay = document.getElementById('overlay');
+      var text = document.getElementById('overlayText');
+      var out = document.getElementById('output');
+      var status = document.getElementById('status');
+      var canvas = document.getElementById('canvas');
+      var probe = document.createElement('canvas'); probe.width = probe.height = 1;
+      var ctx = probe.getContext('2d');
+      function windowDrawn() {
+        try {
+          ctx.clearRect(0, 0, 1, 1);
+          ctx.drawImage(canvas, canvas.width >> 1, canvas.height >> 1, 1, 1, 0, 0, 1, 1);
+          var p = ctx.getImageData(0, 0, 1, 1).data;
+          return p[3] === 255 && p[0] > 150 && p[1] > 150 && p[2] > 150;   // light grey window, not the blue desktop
+        } catch (e) { return false; }
+      }
+      var timer = setInterval(function () {
+        if (out.value.indexOf('Showing Window') !== -1 && windowDrawn()) {
+          clearInterval(timer);
+          setTimeout(function () { overlay.style.display = 'none'; window.rbBootDone(); }, 700);
+        } else if (/Exception thrown/.test(status.textContent) || out.value.indexOf('no driver could be loaded') !== -1) {
+          clearInterval(timer);
+          window.rbBootDone();
+          text.textContent = 'Не удалось запустить программу.';
+          document.getElementById('retry').hidden = false;
+          status.textContent = '';
+          document.getElementById('busy').style.display = 'none';
+        } else if (out.value.indexOf('Launching') !== -1) {
+          text.textContent = 'Запускаем программу 1996 года. Осталось меньше минуты.';
+        }
+      }, 300);
+    })();
+  </script>
+  <script src="rbkbd.js"></script>
+  <script src="boxedwine-shell.js"></script>
+  <script async src="boxedwine.js"></script>
+</body>
+</html>

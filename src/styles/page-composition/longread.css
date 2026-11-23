@@ -473,6 +473,73 @@
   background: #f0f0f0;
 }
 
+/*
+  Демо программы во фрейме: рабочий стол 960×630 и строка-подсказка 30px.
+  Блок шире колонки текста, но не больше родного размера экрана — так картинка остаётся чёткой.
+  Кнопка запуска — запасной вариант.
+*/
+
+.longread > .longread__demo {
+  grid-column: wide;
+  justify-self: center;
+  width: min(100%, 960px);
+}
+
+.longread__demo-screen {
+  position: relative;
+  aspect-ratio: 960 / 660;
+  overflow: hidden;
+  border-radius: var(--rounded-element-border-radius);
+  background: #3a6ea5;
+}
+
+.longread__demo-screen iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.longread__demo-start {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  cursor: pointer;
+}
+
+.longread figure .longread__demo-start img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 0;
+  opacity: 0.35;
+}
+
+.longread__demo-label {
+  position: relative;
+  padding: 0.7em 1.4em;
+  border-radius: 999px;
+  background: var(--color-bg);
+  font-family: var(--font-text);
+  font-size: var(--text_secondary-size);
+  line-height: var(--text_secondary-line-height);
+  color: var(--color-text);
+}
+
+@media (hover: hover) {
+  .longread__demo-start:hover .longread__demo-label {
+    color: var(--color-hover);
+  }
+}
+
 @media screen and (max-width: 767px) {
   .longread h2 {
     margin: 56px 0 24px;
