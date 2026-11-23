@@ -1,0 +1,167 @@
+{#
+  Редакторские комментарии на полях. Выводятся только в локальном предпросмотре
+  (npm run dev); в обычную сборку и на опубликованный сайт не попадают.
+  Сами комментарии лежат в src/_data/comments.json:
+    "адрес страницы": [{ "quote": "фраза из текста", "comment": "замечание", "author": "кто" }]
+  Комментарий встаёт рядом с абзацем, в котором нашлась фраза из "quote".
+#}
+<style>
+  .review-comment {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0.2em 0 0.2em 0.75em;
+    border-left: 2px solid #fc3f1d;
+    font-family: var(--font-text);
+    font-size: var(--text_caption-size);
+    line-height: var(--text_caption-line-height);
+    font-style: normal;
+    font-weight: 400;
+    color: #fc3f1d;
+    white-space: pre-line;
+    text-align: left;
+  }
+
+  /* grid-column: auto — чтобы координаты считались от всей статьи, а не от колонки текста */
+  .longread > .review-comment_margin {
+    position: absolute;
+    z-index: 1;
+    grid-column: auto;
+    margin: 0;
+  }
+
+  .longread > .review-comment_inline,
+  .review-comment_inline {
+    margin: 0.75em 0 var(--text_primary-line-height);
+  }
+
+  .review-comment__author {
+    display: block;
+    margin-bottom: 0.2em;
+    font-weight: 500;
+  }
+
+  .review-comment_lost {
+    margin-bottom: var(--text_primary-line-height);
+    padding: 0.75em 1em;
+    border: 2px solid #fc3f1d;
+    border-radius: 12px;
+  }
+
+  ::highlight(review-comment) {
+    background-color: rgba(252, 63, 29, 0.16);
+  }
+</style>
+<script type="application/json" id="review-comments-data">{{ reviewComments | dump | replace("<", "\\u003c") | safe }}</script>
+<script>
+  (() => {
+    const comments = JSON.parse(document.getElementById("review-comments-data").textContent);
+    const root = document.querySelector(".longread");
+    if (!root || !comments.length) return;
+
+    const MIN_MARGIN = 150; // уже этого поле слева не годится — комментарий встаёт под абзацем
+    const MAX_WIDTH = 230;
+    const GAP = 20;
+
+    // Ищет фразу в блоке, не обращая внимания на переносы и лишние пробелы в исходнике.
+    function findRange(block, quote) {
+      const walker = document.createTreeWalker(block, NodeFilter.SHOW_TEXT);
+      const map = [];
+      let text = "";
+      let prevSpace = true;
+      let node;
+      while ((node = walker.nextNode())) {
+        const value = node.nodeValue;
+        for (let i = 0; i < value.length; i++) {
+          const space = /\s/.test(value[i]);
+          if (space && prevSpace) continue;
+          text += space ? " " : value[i];
+          map.push([node, i]);
+          prevSpace = space;
+        }
+      }
+      const start = text.indexOf(quote);
+      if (start < 0) return null;
+      const first = map[start];
+      const last = map[start + quote.length - 1];
+      const range = new Range();
+      range.setStart(first[0], first[1]);
+      range.setEnd(last[0], last[1] + 1);
+      return range;
+    }
+
+    const blocks = [...root.querySelectorAll("p, h1, h2, h3, h4, li, figcaption, footer")];
+    const ranges = [];
+    const placed = [];
+
+    comments.forEach((item) => {
+      const quote = String(item.quote || "").replace(/\s+/g, " ").trim();
+      const note = document.createElement("aside");
+      note.className = "review-comment";
+      if (item.author) {
+        const author = document.createElement("span");
+        author.className = "review-comment__author";
+        author.textContent = item.author;
+        note.append(author);
+      }
+      note.append(String(item.comment || ""));
+
+      const matches = quote
+        ? blocks.map((el) => ({ el, range: findRange(el, quote) })).filter((m) => m.range)
+        : [];
+      const match = matches.find((m) => !matches.some((o) => o !== m && m.el.contains(o.el)));
+
+      if (!match) {
+        note.classList.add("review-comment_lost");
+        note.prepend(`Не нашлось место в тексте: «${quote}»\n`);
+        root.prepend(note);
+        return;
+      }
+      ranges.push(match.range);
+      placed.push({ note, block: match.el });
+    });
+
+    if (window.Highlight && CSS.highlights) {
+      CSS.highlights.set("review-comment", new Highlight(...ranges));
+    }
+
+    function layout() {
+      const rootRect = root.getBoundingClientRect();
+      const column = root.querySelector(".longread__title") || placed[0]?.block;
+      if (!column) return;
+      const margin = column.getBoundingClientRect().left - rootRect.left - GAP;
+      const onMargin = margin >= MIN_MARGIN;
+      root.style.position = "relative";
+
+      let prevBottom = -Infinity;
+      placed
+        .map((item) => ({ ...item, top: item.block.getBoundingClientRect().top - rootRect.top }))
+        .sort((a, b) => a.top - b.top)
+        .forEach(({ note, block, top }) => {
+          note.classList.toggle("review-comment_margin", onMargin);
+          note.classList.toggle("review-comment_inline", !onMargin);
+          if (!onMargin) {
+            note.style.cssText = "";
+            if (block.tagName === "LI") block.append(note);
+            else block.after(note);
+            return;
+          }
+          if (note.parentNode !== root) root.append(note);
+          const width = Math.min(MAX_WIDTH, margin);
+          const y = Math.max(top, prevBottom + 12);
+          note.style.width = `${width}px`;
+          note.style.left = `${margin - width}px`;
+          note.style.top = `${y}px`;
+          prevBottom = y + note.offsetHeight;
+        });
+    }
+
+    let frame;
+    const schedule = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(layout);
+    };
+    layout();
+    new ResizeObserver(schedule).observe(root);
+    window.addEventListener("load", schedule);
+  })();
+</script>
